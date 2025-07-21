@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Speed Calculator</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            max-width: 600px;
+
+            margin: 0 auto;
+
+            padding: 20px;
+
+            background-color: #f5f5f5;
+
+        }
+
+        
+
+        .calculator {
+
+            background-color: white;
+
+            border-radius: 8px;
+
+            padding: 20px;
+
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
+        }
+
+        
+
+        h1 {
+
+            color: #333;
+
+            text-align: center;
+
+            margin-bottom: 30px;
+
+        }
+
+        
+
+        .form-group {
+
+            margin-bottom: 15px;
+
+        }
+
+        
+
+        label {
+
+            display: block;
+
+            margin-bottom: 5px;
+
+            font-weight: bold;
+
+        }
+
+        
+
+        input {
+
+            width: 100%;
+
+            padding: 8px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 4px;
+
+            box-sizing: border-box;
+
+        }
+
+        
+
+        select {
+
+            width: 100%;
+
+            padding: 8px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 4px;
+
+            background-color: white;
+
+        }
+
+        
+
+        button {
+
+            background-color: #4CAF50;
+
+            color: white;
+
+            border: none;
+
+            padding: 10px 15px;
+
+            border-radius: 4px;
+
+            cursor: pointer;
+
+            width: 100%;
+
+            font-size: 16px;
+
+            margin-top: 10px;
+
+        }
+
+        
+
+        button:hover {
+
+            background-color: #45a049;
+
+        }
+
+        
+
+        #result {
+
+            margin-top: 20px;
+
+            padding: 15px;
+
+            background-color: #e9f7ef;
+
+            border-radius: 4px;
+
+            display: none;
+
+        }
+
+        
+
+        .unit-selection {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+        
+
+        .unit-selection div {
+
+            flex: 1;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="calculator">
+
+        <h1>Speed Calculator</h1>
+
+        
+
+        <div class="form-group">
+
+            <label for="distance">Distance:</label>
+
+            <input type="number" id="distance" placeholder="Enter distance">
+
+        </div>
+
+        
+
+        <div class="unit-selection">
+
+            <div class="form-group">
+
+                <label for="distance-unit">Distance Unit:</label>
+
+                <select id="distance-unit">
+
+                    <option value="km">Kilometers</option>
+
+                    <option value="m">Meters</option>
+
+                    <option value="mi">Miles</option>
+
+                </select>
+
+            </div>
+
+            
+
+            <div class="form-group">
+
+                <label for="time-unit">Time Unit:</label>
+
+                <select id="time-unit">
+
+                    <option value="h">Hours</option>
+
+                    <option value="min">Minutes</option>
+
+                    <option value="s">Seconds</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        
+
+        <div class="form-group">
+
+            <label for="time">Time:</label>
+
+            <input type="number" id="time" placeholder="Enter time">
+
+        </div>
+
+        
+
+        <button onclick="calculateSpeed()">Calculate Speed</button>
+
+        
+
+        <div id="result"></div>
+
+    </div>
+
+
+
+    <script>
+
+        function calculateSpeed() {
+
+            // Get input values
+
+            const distance = parseFloat(document.getElementById('distance').value);
+
+            const distanceUnit = document.getElementById('distance-unit').value;
+
+            const time = parseFloat(document.getElementById('time').value);
+
+            const timeUnit = document.getElementById('time-unit').value;
+
+            
+
+            // Validate inputs
+
+            if (isNaN(distance) || isNaN(time) || distance <= 0 || time <= 0) {
+
+                alert('Please enter valid positive numbers for distance and time');
+
+                return;
+
+            }
+
+            
+
+            // Convert distance to kilometers
+
+            let distanceInKm;
+
+            switch(distanceUnit) {
+
+                case 'km':
+
+                    distanceInKm = distance;
+
+                    break;
+
+                case 'm':
+
+                    distanceInKm = distance / 1000;
+
+                    break;
+
+                case 'mi':
+
+                    distanceInKm = distance * 1.60934;
+
+                    break;
+
+            }
+
+            
+
+            // Convert time to hours
+
+            let timeInHours;
+
+            switch(timeUnit) {
+
+                case 'h':
+
+                    timeInHours = time;
+
+                    break;
+
+                case 'min':
+
+                    timeInHours = time / 60;
+
+                    break;
+
+                case 's':
+
+                    timeInHours = time / 3600;
+
+                    break;
+
+            }
+
+            
+
+            // Calculate speed (km/h)
+
+            const speed = distanceInKm / timeInHours;
+
+            
+
+            // Display result
+
+            const resultElement = document.getElementById('result');
+
+            resultElement.style.display = 'block';
+
+            resultElement.innerHTML = `
+
+                <strong>Result:</strong><br>
+
+                Speed: ${speed.toFixed(2)} km/h<br>
+
+                ${(speed / 1.60934).toFixed(2)} mph
+
+            `;
+
+        }
+
+    </script>
+
+</body>
+
+</html>
